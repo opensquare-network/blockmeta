@@ -1,14 +1,17 @@
+require("dotenv").config();
 const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
 const { getApi } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
 const { sleep } = require("./utils");
 const { getBlockCollection } = require("./mongo/col")
 const { logger } = require("./utils/logger")
+const { deleteFromHeight } = require("./mongo/delete")
 
 async function main() {
   await updateHeight();
   let scanHeight = await getNextScanHeight();
   const api = await getApi();
+  const step = parseInt(process.env.SCAN_STEP) || 100
 
   while (true) {
     const chainHeight = getLatestHeight();
@@ -19,15 +22,26 @@ async function main() {
       continue;
     }
 
+    const targetHeights = [];
+    let height = scanHeight;
+    while (height <= chainHeight && height < scanHeight + step) {
+      targetHeights.push(height++)
+    }
+
+    const destHeight = targetHeights[targetHeights.length - 1]
+
     try {
-      await scanByHeight(api, scanHeight);
+      const promises = targetHeights.map(height => scanByHeight(api, height))
+      await Promise.all(promises)
     } catch (e) {
+      await deleteFromHeight(scanHeight)
       await sleep(3000);
-      console.error(`Error with block scan ${ scanHeight }`, e);
+      console.error(`Error with block scan ${scanHeight}...${destHeight}`, e);
       continue;
     }
 
-    await updateScanHeight(scanHeight++);
+    await updateScanHeight(destHeight);
+    scanHeight = destHeight + 1
   }
 }
 
@@ -40,19 +54,21 @@ async function scanByHeight(api, scanHeight) {
     throw e;
   }
 
-  const block = await api.rpc.chain.getBlock(blockHash);
-  const allEvents = await api.query.system.events.at(blockHash);
-  const runtimeVersion = await api.rpc.state.getRuntimeVersion(blockHash);
+  const [block, allEvents, runtimeVersion] = await Promise.all([
+    api.rpc.chain.getBlock(blockHash),
+    api.query.system.events.at(blockHash),
+    api.rpc.state.getRuntimeVersion(blockHash)
+  ])
 
   const col = await getBlockCollection()
   await col.insertOne({
     height: scanHeight,
     block: block.toHex(),
     events: allEvents.toHex(),
-    specVersioin: runtimeVersion.specVersion.toNumber()
+    specVersion: runtimeVersion.specVersion.toNumber()
   })
 
-  logger.info(`${ scanHeight } done`);
+  logger.info(`${scanHeight} done`);
 }
 
 // FIXME: log the error
