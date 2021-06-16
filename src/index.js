@@ -11,6 +11,7 @@ async function main() {
   await updateHeight();
   let scanHeight = await getNextScanHeight();
   const api = await getApi();
+  await deleteFromHeight(scanHeight);
   const step = parseInt(process.env.SCAN_STEP) || 100
 
   while (true) {
