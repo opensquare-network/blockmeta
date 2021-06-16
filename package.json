@@ -5,6 +5,10 @@
   "repository": "git@github.com:opensquare-network/blockmeta.git",
   "author": "Yongfeng LI <wliyongfeng@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dotScan": "pm2 start ecosystem.config.js --only meta-scan-dot --env production",
+    "ksmScan": "pm2 start ecosystem.config.js --only meta-scan-ksm --env production"
+  },
   "dependencies": {
     "@polkadot/api": "^4.13.1",
     "dotenv": "^10.0.0",
@@ -12,6 +16,7 @@
     "mongodb": "^3.6.9"
   },
   "devDependencies": {
-    "@types/mongodb": "^3.6.18"
+    "@types/mongodb": "^3.6.18",
+    "pm2": "^5.1.0"
   }
 }
