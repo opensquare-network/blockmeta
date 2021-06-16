@@ -11,7 +11,10 @@ function getDbName() {
 }
 
 const statusCollectionName = "status";
+const blockCollectionName = "block";
+
 let statusCol = null;
+let blockCol = null
 
 let client = null;
 let db = null;
@@ -25,6 +28,7 @@ async function initDb() {
 
   db = client.db(getDbName());
   statusCol = db.collection(statusCollectionName);
+  blockCol = db.collection(blockCollectionName);
 
   await _createIndexes();
 }
@@ -49,6 +53,12 @@ async function getStatusCollection() {
   return statusCol;
 }
 
+async function getBlockCollection() {
+  await tryInit(blockCol);
+  return blockCol;
+}
+
 module.exports = {
-  getStatusCollection
+  getStatusCollection,
+  getBlockCollection,
 }

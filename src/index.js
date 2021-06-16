@@ -2,6 +2,8 @@ const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
 const { getApi } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
 const { sleep } = require("./utils");
+const { getBlockCollection } = require("./mongo/col")
+const { logger } = require("./utils/logger")
 
 async function main() {
   await updateHeight();
@@ -21,7 +23,7 @@ async function main() {
       await scanByHeight(api, scanHeight);
     } catch (e) {
       await sleep(3000);
-      console.error(`Error with block scan ${scanHeight}`, e);
+      console.error(`Error with block scan ${ scanHeight }`, e);
       continue;
     }
 
@@ -40,8 +42,17 @@ async function scanByHeight(api, scanHeight) {
 
   const block = await api.rpc.chain.getBlock(blockHash);
   const allEvents = await api.query.system.events.at(blockHash);
+  const runtimeVersion = await api.rpc.state.getRuntimeVersion(blockHash);
 
-  console.log(block, allEvents)
+  const col = await getBlockCollection()
+  await col.insertOne({
+    height: scanHeight,
+    block: block.toHex(),
+    events: allEvents.toHex(),
+    specVersioin: runtimeVersion.specVersion.toNumber()
+  })
+
+  logger.info(`${ scanHeight } done`);
 }
 
 // FIXME: log the error
