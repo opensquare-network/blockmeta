@@ -12,9 +12,13 @@ const defaultEndPoint = {
 function getEndPoint() {
   const chain = currentChain();
   if ("kusama" === chain) {
-    return process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama;
+    const endpoint = process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama
+    console.log('endpoint', endpoint)
+    return endpoint;
   } else {
-    return process.env.DOT_WS_ENDPOINT || defaultEndPoint.polkadot;
+    const endpoint = process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama
+    console.log('endpoint', endpoint)
+    return endpoint;
   }
 }
 
