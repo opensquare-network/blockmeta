@@ -16,7 +16,7 @@ function getEndPoint() {
     console.log('endpoint', endpoint)
     return endpoint;
   } else {
-    const endpoint = process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama
+    const endpoint = process.env.DOT_WS_ENDPOINT || defaultEndPoint.polkadot
     console.log('endpoint', endpoint)
     return endpoint;
   }
