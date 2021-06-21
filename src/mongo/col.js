@@ -1,10 +1,12 @@
 const { MongoClient } = require("mongodb");
-const { currentChain } = require("../chain/chain");
+const { currentChain, CHAINS } = require("../chain/chain");
 
 function getDbName() {
   const chain = currentChain();
-  if ("kusama" === chain) {
+  if (CHAINS.KUSAMA === chain) {
     return process.env.MONGO_DB_KSM_NAME || "meta-ksm";
+  } else if (CHAINS.WESTMINT === chain) {
+    return process.env.MONGO_DB_WESTMINT_NAME || "meta-westmint";
   } else {
     return process.env.MONGO_DB_DOT_NAME || "meta-dot";
   }

@@ -7,18 +7,17 @@ let api = null;
 const defaultEndPoint = {
   kusama: "wss://kusama.elara.patract.io",
   polkadot: "wss://polkadot.elara.patract.io/",
+  westmint: "wss://westmint.westend.elara.patract.io/",
 };
 
 function getEndPoint() {
   const chain = currentChain();
   if ("kusama" === chain) {
-    const endpoint = process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama
-    console.log('endpoint', endpoint)
-    return endpoint;
+    return process.env.KSM_WS_ENDPOINT || defaultEndPoint.kusama;
+  } else if ("westmint" === chain) {
+    return process.env.WESTMINT_WS_ENDPOINT || defaultEndPoint.westmint;
   } else {
-    const endpoint = process.env.DOT_WS_ENDPOINT || defaultEndPoint.polkadot
-    console.log('endpoint', endpoint)
-    return endpoint;
+    return process.env.DOT_WS_ENDPOINT || defaultEndPoint.polkadot
   }
 }
 

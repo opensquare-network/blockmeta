@@ -1,5 +1,5 @@
 function currentChain() {
-  if (["polkadot", "kusama"].includes(process.env.CHAIN)) {
+  if (["polkadot", "kusama", "westmint"].includes(process.env.CHAIN)) {
     return process.env.CHAIN;
   } else {
     return "kusama";
@@ -9,6 +9,7 @@ function currentChain() {
 const CHAINS = {
   POLKADOT: "polkadot",
   KUSAMA: "kusama",
+  WESTMINT: "westmint",
 };
 
 module.exports = {

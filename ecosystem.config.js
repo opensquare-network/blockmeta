@@ -32,6 +32,11 @@ const ksmScanConfig = {
   ...getEnvConfig("kusama"),
 };
 
+const westmintConfig = {
+  ...commonPart,
+  ...getEnvConfig("westmint"),
+}
+
 module.exports = {
   apps: [
     // prod-scan
@@ -42,6 +47,10 @@ module.exports = {
     {
       name: "meta-scan-ksm",
       ...ksmScanConfig,
+    },
+    {
+      name: "meta-scan-westmint",
+      ...westmintConfig,
     },
   ]
 }
