@@ -12,6 +12,7 @@ async function main() {
   let scanHeight = await getNextScanHeight();
   const api = await getApi();
   await deleteFromHeight(scanHeight);
+  logger.info(`deleted from ${scanHeight}`);
   const step = parseInt(process.env.SCAN_STEP) || 100
 
   while (true) {
@@ -36,6 +37,7 @@ async function main() {
       await Promise.all(promises)
     } catch (e) {
       await deleteFromHeight(scanHeight)
+      logger.info(`deleted from ${scanHeight}`);
       await sleep(3000);
       console.error(`Error with block scan ${scanHeight}...${destHeight}`, e);
       continue;
@@ -48,6 +50,7 @@ async function main() {
 
 async function scanByHeight(api, scanHeight) {
   let blockHash;
+  logger.info(`handle ${scanHeight}`);
   try {
     blockHash = await api.rpc.chain.getBlockHash(scanHeight);
   } catch (e) {
