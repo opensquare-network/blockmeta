@@ -58,7 +58,6 @@ async function main() {
 
 async function scanByHeight(api, scanHeight) {
   let blockHash;
-  logger.info(`handle ${scanHeight}`);
   try {
     blockHash = await api.rpc.chain.getBlockHash(scanHeight);
   } catch (e) {
