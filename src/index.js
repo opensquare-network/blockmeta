@@ -34,7 +34,14 @@ async function main() {
 
     try {
       const promises = targetHeights.map(height => scanByHeight(api, height))
-      await Promise.all(promises)
+      const dataArr = await Promise.all(promises)
+
+      const col = await getBlockCollection()
+      const bulk = col.initializeUnorderedBulkOp();
+      for (const data of dataArr) {
+        bulk.insert(data)
+      }
+      await bulk.execute()
     } catch (e) {
       await deleteFromHeight(scanHeight)
       logger.info(`deleted from ${scanHeight}`);
@@ -43,6 +50,7 @@ async function main() {
       continue;
     }
 
+    logger.info(`${destHeight} done`)
     await updateScanHeight(destHeight);
     scanHeight = destHeight + 1
   }
@@ -64,15 +72,12 @@ async function scanByHeight(api, scanHeight) {
     api.rpc.state.getRuntimeVersion(blockHash)
   ])
 
-  const col = await getBlockCollection()
-  await col.insertOne({
+  return {
     height: scanHeight,
     block: block.toHex(),
     events: allEvents.toHex(),
     specVersion: runtimeVersion.specVersion.toNumber()
-  })
-
-  logger.info(`${scanHeight} done`);
+  }
 }
 
 // FIXME: log the error
