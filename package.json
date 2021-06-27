@@ -11,7 +11,7 @@
     "westmintScan": "pm2 start ecosystem.config.js --only meta-scan-westmint --env production"
   },
   "dependencies": {
-    "@polkadot/api": "^4.16.1",
+    "@polkadot/api": "^4.16.2",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
     "mongodb": "^3.6.9"

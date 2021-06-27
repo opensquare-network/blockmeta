@@ -99,32 +99,32 @@
   dependencies:
     debug "^4.3.1"
 
-"@polkadot/api-derive@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/api-derive/-/api-derive-4.16.1.tgz#434c9135eeff91f2c9c4c926c8bf37dd2560d46e"
-  integrity sha512-wn/gEIftZLWdq8vwJQl4G5ZRkLz849kixrBQTGR8PqqRgHBQ7DOJyVtcRlWjj/YKjm+FVLf6pYLw4+SKdrvY+g==
+"@polkadot/api-derive@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/api-derive/-/api-derive-4.16.2.tgz#8ed97fec7965a1be1c5d87a3639752d5cdfdbc8a"
+  integrity sha512-xRAIGoeULK+E7uep5D0eDUN6m0KcMV4eOPkmvyfp7ndxfaf94ydfEOw+QemrnT1T/chA/qq96EYvuBe3lv5w1Q==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/api" "4.16.1"
-    "@polkadot/rpc-core" "4.16.1"
-    "@polkadot/types" "4.16.1"
+    "@polkadot/api" "4.16.2"
+    "@polkadot/rpc-core" "4.16.2"
+    "@polkadot/types" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/util-crypto" "^6.10.1"
     "@polkadot/x-rxjs" "^6.10.1"
 
-"@polkadot/api@4.16.1", "@polkadot/api@^4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/api/-/api-4.16.1.tgz#d18e63a932c8ffee48728306589e47d74d1aacce"
-  integrity sha512-7kxKS7NXQ8fOgjHFHgQ/7tyFvdfyZtojAbXSpUqNF61QjggBL66qTKEvomsB7KGphpoDMQqB96Vjes18TbF14w==
+"@polkadot/api@4.16.2", "@polkadot/api@^4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/api/-/api-4.16.2.tgz#361fbeb690d8b646387e9f8bec22929aca09d691"
+  integrity sha512-x+fWc7mE3ZuGxoFCTf/Tnv0z7rDTM198M9LnWUJdadyNT3QAtE+Cjgo1bCrroTnuD3whd0jhFLfLQCwz95RrwA==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/api-derive" "4.16.1"
+    "@polkadot/api-derive" "4.16.2"
     "@polkadot/keyring" "^6.10.1"
-    "@polkadot/metadata" "4.16.1"
-    "@polkadot/rpc-core" "4.16.1"
-    "@polkadot/rpc-provider" "4.16.1"
-    "@polkadot/types" "4.16.1"
-    "@polkadot/types-known" "4.16.1"
+    "@polkadot/metadata" "4.16.2"
+    "@polkadot/rpc-core" "4.16.2"
+    "@polkadot/rpc-provider" "4.16.2"
+    "@polkadot/types" "4.16.2"
+    "@polkadot/types-known" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/util-crypto" "^6.10.1"
     "@polkadot/x-rxjs" "^6.10.1"
@@ -139,14 +139,14 @@
     "@polkadot/util" "6.10.1"
     "@polkadot/util-crypto" "6.10.1"
 
-"@polkadot/metadata@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/metadata/-/metadata-4.16.1.tgz#26dd7552ae4c77995e8060bd21c7a933062d4049"
-  integrity sha512-9tS+VdCeBxOVUe59dD+ihrG++BmCTE14NvCKY8skOo34pCiMcWRlTBGwQWbphC8RsHoVaaordVLtxMRzSDNqQA==
+"@polkadot/metadata@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/metadata/-/metadata-4.16.2.tgz#2a90c9e6ac500ee1b176a5e0e08b64c8d7bf5458"
+  integrity sha512-wx5DwAxV8zEDQzgdeDFRRlDb89CqmgY/eKusvMgzRuLG5Z4Hu4jxQ6LnBsjVmA70BBhgs+uAuJ7mzY76OO4wDw==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/types" "4.16.1"
-    "@polkadot/types-known" "4.16.1"
+    "@polkadot/types" "4.16.2"
+    "@polkadot/types-known" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/util-crypto" "^6.10.1"
 
@@ -157,25 +157,25 @@
   dependencies:
     "@babel/runtime" "^7.14.6"
 
-"@polkadot/rpc-core@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/rpc-core/-/rpc-core-4.16.1.tgz#ae06b8a63e5c709d0ce6e4003dfaf9af6234d321"
-  integrity sha512-bqzNIZCH8LZZMJxpQ2HaG8aRwFrFx/XDpDLPF8mU1wDnExKGLqOMwb6/x1hNBR8PSjZ1+JJY1VtD7VhaLd7pvg==
+"@polkadot/rpc-core@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/rpc-core/-/rpc-core-4.16.2.tgz#a839407a1c00048a10ed711ad3dd1b52f8fd20cc"
+  integrity sha512-NAMkN5rtccLL7G0aeMqxx/R38exkJ/xVNEZh9Y/okw8w0iOCnZk72ge9ABkd/SJbLxm6l+5c87cTXUK77r1zTQ==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/metadata" "4.16.1"
-    "@polkadot/rpc-provider" "4.16.1"
-    "@polkadot/types" "4.16.1"
+    "@polkadot/metadata" "4.16.2"
+    "@polkadot/rpc-provider" "4.16.2"
+    "@polkadot/types" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/x-rxjs" "^6.10.1"
 
-"@polkadot/rpc-provider@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/rpc-provider/-/rpc-provider-4.16.1.tgz#8ee9fe8f1a5a6c6021b2b0c2ae377c78ee0be344"
-  integrity sha512-KVSwnZMCT3m0Ueq4GnZr+Ph/+KpTFrPbrdLOVrD65Uf3782l1Yq1reV1l/r8aQnvbbJnEj7fBtuxi6iaiyDGjg==
+"@polkadot/rpc-provider@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/rpc-provider/-/rpc-provider-4.16.2.tgz#73a0b6818ec57d10b735b1e471eb7d88dd8a39db"
+  integrity sha512-aAq3mHkgHziQrZQdNuxGSrkKKksA8Kk0N8WWsW1DZOkjt7rlF3vdmCguHTPlOzO4NHmeDsGVlGGBzjOza8QNbA==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/types" "4.16.1"
+    "@polkadot/types" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/util-crypto" "^6.10.1"
     "@polkadot/x-fetch" "^6.10.1"
@@ -183,23 +183,23 @@
     "@polkadot/x-ws" "^6.10.1"
     eventemitter3 "^4.0.7"
 
-"@polkadot/types-known@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/types-known/-/types-known-4.16.1.tgz#9e382abfce333e090b9b7339cfdb902c6b9e3ebd"
-  integrity sha512-TbWJoJrfgOznjFOBT0NRENbPBgNPFLo2X5O+JH5Ons0neUjHL1nGmyZhZ6KiJALJ0gdpciPHCo8b7R1wbhcLLg==
+"@polkadot/types-known@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/types-known/-/types-known-4.16.2.tgz#94e54adb3ba767342f9aed226eb4aa973520b911"
+  integrity sha512-ydeS1SnO25O//TThzUBYjthCOH3h70j1IRVQ+CPVhVbZJoMRr47hIysFTBjyxyKVTQtj20vniZV8+qq6oiWggA==
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@polkadot/networks" "^6.10.1"
-    "@polkadot/types" "4.16.1"
+    "@polkadot/types" "4.16.2"
     "@polkadot/util" "^6.10.1"
 
-"@polkadot/types@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.npmjs.org/@polkadot/types/-/types-4.16.1.tgz#fb1b04b4b810cb28328e757edeb93417946374a6"
-  integrity sha512-XtynKgnfiJEJ/bLriA/w7OAggQKdPiipKNZUfndP8OTm0UgRc1zcNX8Z/X/JG8+nAFpYDu2EWwKn2sPqheX+xQ==
+"@polkadot/types@4.16.2":
+  version "4.16.2"
+  resolved "https://registry.npmjs.org/@polkadot/types/-/types-4.16.2.tgz#06dfedf19a50d659863c068ba1444efbc214c302"
+  integrity sha512-JSIvVKIBhRHCswDPYMoy4TLvR9O1NT5mqyIBoLjNKur0WShLk1jVtiyKbU+2/AuCbM1nehiWagmAlWmMFNaDMw==
   dependencies:
     "@babel/runtime" "^7.14.6"
-    "@polkadot/metadata" "4.16.1"
+    "@polkadot/metadata" "4.16.2"
     "@polkadot/util" "^6.10.1"
     "@polkadot/util-crypto" "^6.10.1"
     "@polkadot/x-rxjs" "^6.10.1"
