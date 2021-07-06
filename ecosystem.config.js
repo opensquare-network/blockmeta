@@ -52,5 +52,9 @@ module.exports = {
       name: "meta-scan-westmint",
       ...westmintConfig,
     },
+    {
+      name: "meta-scan-westmint-staging",
+      ...westmintConfig,
+    },
   ]
 }
