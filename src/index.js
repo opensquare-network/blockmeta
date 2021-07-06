@@ -1,4 +1,6 @@
 require("dotenv").config();
+
+const { extractAuthor } = require("@polkadot/api-derive/type/util");
 const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
 const { getApi } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
@@ -72,12 +74,14 @@ async function scanByHeight(api, scanHeight) {
     api.query.session.validators.at(blockHash),
   ])
 
+  const author = extractAuthor(block.block.header.digest, validators);
+
   return {
     height: scanHeight,
     block: block.toHex(),
     events: allEvents.toHex(),
     specVersion: runtimeVersion.specVersion.toNumber(),
-    validators: validators.toHex(),
+    author: author?.toHex(),
   }
 }
 
