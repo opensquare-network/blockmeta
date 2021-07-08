@@ -9,7 +9,9 @@
     "dotScan": "pm2 start ecosystem.config.js --only meta-scan-dot --env production",
     "ksmScan": "pm2 start ecosystem.config.js --only meta-scan-ksm --env production",
     "westmintScan": "pm2 start ecosystem.config.js --only meta-scan-westmint --env production",
-    "westmintScanStaging": "pm2 start ecosystem.config.js --only meta-scan-westmint-staging --env production"
+    "statemineScan": "pm2 start ecosystem.config.js --only meta-scan-statemine --env production",
+    "westmintScanStaging": "pm2 start ecosystem.config.js --only meta-scan-westmint-staging --env production",
+    "statemineScanStaging": "pm2 start ecosystem.config.js --only meta-scan-statemine-staging --env production"
   },
   "dependencies": {
     "@polkadot/api": "^4.17.1",
