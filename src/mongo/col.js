@@ -7,6 +7,8 @@ function getDbName() {
     return process.env.MONGO_DB_KSM_NAME || "meta-ksm";
   } else if (CHAINS.WESTMINT === chain) {
     return process.env.MONGO_DB_WESTMINT_NAME || "meta-westmint";
+  } else if (CHAINS.STATEMINE === chain) {
+    return process.env.MONGO_DB_STATEMINE_NAME || "meta-statemine";
   } else {
     return process.env.MONGO_DB_DOT_NAME || "meta-dot";
   }

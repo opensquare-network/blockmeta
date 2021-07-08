@@ -37,6 +37,11 @@ const westmintConfig = {
   ...getEnvConfig("westmint"),
 }
 
+const statemineConfig = {
+  ...commonPart,
+  ...getEnvConfig("statemine")
+}
+
 module.exports = {
   apps: [
     // prod-scan
@@ -55,6 +60,14 @@ module.exports = {
     {
       name: "meta-scan-westmint-staging",
       ...westmintConfig,
+    },
+    {
+      name: "meta-scan-statemine",
+      ...statemineConfig
+    },
+    {
+      name: "meta-scan-statemine-staging",
+      ...statemineConfig
     },
   ]
 }

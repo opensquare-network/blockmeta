@@ -15,7 +15,7 @@ async function main() {
   const api = await getApi();
   await deleteFromHeight(scanHeight);
   logger.info(`deleted from ${scanHeight}`);
-  const step = parseInt(process.env.SCAN_STEP) || 100
+  const step = parseInt(process.env.SCAN_STEP) || 5
 
   while (true) {
     const chainHeight = getLatestHeight();
