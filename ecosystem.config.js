@@ -50,7 +50,15 @@ module.exports = {
       ...dotScanConfig,
     },
     {
+      name: "meta-scan-dot-staging",
+      ...dotScanConfig,
+    },
+    {
       name: "meta-scan-ksm",
+      ...ksmScanConfig,
+    },
+    {
+      name: "meta-scan-ksm-staging",
       ...ksmScanConfig,
     },
     {

@@ -8,6 +8,8 @@
   "scripts": {
     "dotScan": "pm2 start ecosystem.config.js --only meta-scan-dot --env production",
     "ksmScan": "pm2 start ecosystem.config.js --only meta-scan-ksm --env production",
+    "dotScanStaging": "pm2 start ecosystem.config.js --only meta-scan-dot-staging --env production",
+    "ksmScanStaging": "pm2 start ecosystem.config.js --only meta-scan-ksm-staging --env production",
     "westmintScan": "pm2 start ecosystem.config.js --only meta-scan-westmint --env production",
     "statemineScan": "pm2 start ecosystem.config.js --only meta-scan-statemine --env production",
     "westmintScanStaging": "pm2 start ecosystem.config.js --only meta-scan-westmint-staging --env production",
