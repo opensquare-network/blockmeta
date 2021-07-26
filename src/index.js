@@ -57,7 +57,8 @@ async function main() {
 
     logger.info(`${ destHeight } done`)
     await updateScanHeight(destHeight);
-    scanHeight = destHeight + 1
+    scanHeight = destHeight + 1;
+    await sleep(1);
   }
 }
 
