@@ -96,5 +96,5 @@ async function test() {
   console.log(data)
 }
 
-main().catch(logger.error);
+main().catch(e => logger.error('main error:', e));
 // test()

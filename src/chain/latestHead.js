@@ -8,7 +8,7 @@ function getUnSubscribeNewHeadFunction() {
 }
 
 async function updateHeight() {
-  const api = await getApi();
+  const { api } = await getApi();
 
   unsubscribeNewHead = await api.rpc.chain.subscribeFinalizedHeads((header) => {
     latestHeight = header.number.toNumber();
