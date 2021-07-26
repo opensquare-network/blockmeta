@@ -82,8 +82,8 @@ async function scanByHeight(api, provider, scanHeight) {
   return {
     height: scanHeight,
     version: blockDataVersion,
-    block: block.toHex(),
-    events: allEvents.toHex(),
+    block: block,
+    events: allEvents,
     specVersion: runtimeVersion.specVersion,
     author: author?.toHex(),
   }
@@ -92,7 +92,8 @@ async function scanByHeight(api, provider, scanHeight) {
 async function test() {
   const { api, provider } = await getApi()
 
-  await scanByHeight(api, provider, 501);
+  const data = await scanByHeight(api, provider, 501);
+  console.log(data)
 }
 
 main().catch(logger.error);
