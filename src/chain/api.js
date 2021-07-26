@@ -30,7 +30,10 @@ async function getApi() {
     api = await ApiPromise.create({ provider });
   }
 
-  return api;
+  return {
+    api,
+    provider
+  };
 }
 
 async function disconnect() {
