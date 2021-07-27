@@ -3,6 +3,7 @@ const CHAINS = {
   KUSAMA: "kusama",
   WESTMINT: "westmint",
   STATEMINE: "statemine",
+  KARURA: "karura",
 };
 
 function currentChain() {
