@@ -13,7 +13,9 @@
     "westmintScan": "pm2 start ecosystem.config.js --only meta-scan-westmint --env production",
     "statemineScan": "pm2 start ecosystem.config.js --only meta-scan-statemine --env production",
     "westmintScanStaging": "pm2 start ecosystem.config.js --only meta-scan-westmint-staging --env production",
-    "statemineScanStaging": "pm2 start ecosystem.config.js --only meta-scan-statemine-staging --env production"
+    "statemineScanStaging": "pm2 start ecosystem.config.js --only meta-scan-statemine-staging --env production",
+    "karuraScan": "pm2 start ecosystem.config.js --only meta-scan-karura --env production",
+    "karuraScanStaging": "pm2 start ecosystem.config.js --only meta-scan-karura-staging --env production"
   },
   "dependencies": {
     "@polkadot/api": "^5.1.1",
