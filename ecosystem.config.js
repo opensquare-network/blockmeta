@@ -42,6 +42,11 @@ const statemineConfig = {
   ...getEnvConfig("statemine")
 }
 
+const karuraConfig = {
+  ...commonPart,
+  ...getEnvConfig("karura")
+}
+
 module.exports = {
   apps: [
     // prod-scan
@@ -76,6 +81,14 @@ module.exports = {
     {
       name: "meta-scan-statemine-staging",
       ...statemineConfig
+    },
+    {
+      name: "meta-scan-karura",
+      ...karuraConfig
+    },
+    {
+      name: "meta-scan-karura-staging",
+      ...karuraConfig
     },
   ]
 }
