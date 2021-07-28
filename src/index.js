@@ -78,7 +78,8 @@ async function scanByHeight(api, provider, scanHeight) {
     api.query.session.validators.at(blockHash),
   ])
 
-  const author = extractAuthor(block.block.header.digest, validators);
+  const digest = api.registry.createType('Digest', block.block.header.digest, true)
+  const author = extractAuthor(digest, validators);
 
   return {
     height: scanHeight,
@@ -86,7 +87,7 @@ async function scanByHeight(api, provider, scanHeight) {
     block: block,
     events: allEvents,
     specVersion: runtimeVersion.specVersion,
-    author: author?.toHex(),
+    author: author?.toString(),
   }
 }
 
