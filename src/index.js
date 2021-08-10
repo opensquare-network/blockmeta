@@ -66,7 +66,7 @@ async function main() {
       const dataArr = await Promise.all(promises);
       const metaArr = dataArr.map(i => i.meta);
       const runtimeVersions = dataArr.map(i => i.version);
-      const differentVersions = extractDifferentVersions(runtimeVersions, latestVersion?.version);
+      const differentVersions = extractDifferentVersions(runtimeVersions, latestVersion?.runtimeVersion);
 
       await insertBlocksMeta(metaArr);
       await insertVersions(differentVersions);
