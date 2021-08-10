@@ -17,10 +17,13 @@ function getDbName() {
 }
 
 const statusCollectionName = "status";
+// store runtime versions
+const versionCollectionName = "version";
 const blockCollectionName = "block";
 
 let statusCol = null;
-let blockCol = null
+let blockCol = null;
+let versionCol = null;
 
 let client = null;
 let db = null;
@@ -35,6 +38,7 @@ async function initDb() {
   db = client.db(getDbName());
   statusCol = db.collection(statusCollectionName);
   blockCol = db.collection(blockCollectionName);
+  versionCol = db.collection(versionCollectionName);
 
   await _createIndexes();
 }
@@ -66,7 +70,13 @@ async function getBlockCollection() {
   return blockCol;
 }
 
+async function getVersionCollection() {
+  await tryInit(versionCol);
+  return versionCol;
+}
+
 module.exports = {
   getStatusCollection,
   getBlockCollection,
+  getVersionCollection,
 }

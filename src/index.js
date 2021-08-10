@@ -5,12 +5,35 @@ const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
 const { getApi } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
 const { sleep } = require("./utils");
-const { getBlockCollection } = require("./mongo/col")
+const { getBlockCollection, getVersionCollection } = require("./mongo/col")
 const { logger } = require("./utils/logger")
 const { deleteFromHeight } = require("./mongo/delete")
+const { getLatestRuntimeVersion } = require("./mongo/service");
 const { blockDataVersion } = require("./utils/constants")
+const { extractDifferentVersions } = require("./utils/runtimeVersions")
 
 const eventsKey = '0x26aa394eea5630e07c48ae0c9558cef780d41e5e16056765bc8461851072c9d7';
+
+let latestVersion = null;
+
+async function insertBlocksMeta(blocksData) {
+  const col = await getBlockCollection()
+  const bulk = col.initializeUnorderedBulkOp();
+  for (const data of blocksData) {
+    bulk.insert(data)
+  }
+  await bulk.execute()
+}
+
+async function insertVersions(versions) {
+  const col = await getVersionCollection();
+
+  const bulk = col.initializeUnorderedBulkOp();
+  for (const version of versions) {
+    bulk.insert(version)
+  }
+  await bulk.execute()
+}
 
 async function main() {
   await updateHeight();
@@ -18,7 +41,8 @@ async function main() {
   const { api, provider } = await getApi();
   await deleteFromHeight(scanHeight);
   logger.info(`deleted from ${ scanHeight }`);
-  const step = parseInt(process.env.SCAN_STEP) || 5
+  const step = parseInt(process.env.SCAN_STEP) || 5;
+  latestVersion = await getLatestRuntimeVersion();
 
   while (true) {
     const chainHeight = getLatestHeight();
@@ -38,15 +62,18 @@ async function main() {
     const destHeight = targetHeights[targetHeights.length - 1]
 
     try {
-      const promises = targetHeights.map(height => scanByHeight(api, provider, height))
-      const dataArr = await Promise.all(promises)
+      const promises = targetHeights.map(height => scanByHeight(api, provider, height));
+      const dataArr = await Promise.all(promises);
+      const metaArr = dataArr.map(i => i.meta);
+      const runtimeVersions = dataArr.map(i => i.version);
+      const differentVersions = extractDifferentVersions(runtimeVersions, latestVersion?.version);
 
-      const col = await getBlockCollection()
-      const bulk = col.initializeUnorderedBulkOp();
-      for (const data of dataArr) {
-        bulk.insert(data)
+      await insertBlocksMeta(metaArr);
+      await insertVersions(differentVersions);
+
+      if (runtimeVersions.length > 0) {
+        latestVersion = runtimeVersions[runtimeVersions.length - 1]
       }
-      await bulk.execute()
     } catch (e) {
       await deleteFromHeight(scanHeight)
       logger.info(`deleted from ${ scanHeight }`);
@@ -81,13 +108,20 @@ async function scanByHeight(api, provider, scanHeight) {
   const digest = api.registry.createType('Digest', block.block.header.digest, true)
   const author = extractAuthor(digest, validators);
 
-  return {
+  const meta = {
     height: scanHeight,
     version: blockDataVersion,
     block: block,
     events: allEvents,
-    specVersion: runtimeVersion.specVersion,
     author: author?.toString(),
+  }
+
+  return {
+    meta,
+    version: {
+      height: scanHeight,
+      runtimeVersion,
+    },
   }
 }
 
