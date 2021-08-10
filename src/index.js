@@ -16,7 +16,11 @@ const eventsKey = '0x26aa394eea5630e07c48ae0c9558cef780d41e5e16056765bc846185107
 
 let latestVersion = null;
 
-async function insertBlocksMeta(blocksData) {
+async function insertBlocksMeta(blocksData = []) {
+  if (blocksData.length <= 0) {
+    return
+  }
+
   const col = await getBlockCollection()
   const bulk = col.initializeUnorderedBulkOp();
   for (const data of blocksData) {
@@ -25,9 +29,12 @@ async function insertBlocksMeta(blocksData) {
   await bulk.execute()
 }
 
-async function insertVersions(versions) {
-  const col = await getVersionCollection();
+async function insertVersions(versions = []) {
+  if (versions.length <= 0) {
+    return
+  }
 
+  const col = await getVersionCollection();
   const bulk = col.initializeUnorderedBulkOp();
   for (const version of versions) {
     bulk.insert(version)
