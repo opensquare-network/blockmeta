@@ -1,5 +1,6 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { currentChain, CHAINS } = require("./chain");
+const { typesBundleForPolkadot } = require('@acala-network/type-definitions');
 
 let provider = null;
 let api = null;
@@ -30,7 +31,14 @@ function getEndPoint() {
 async function getApi() {
   if (!api) {
     provider = new WsProvider(getEndPoint(), 1000);
-    api = await ApiPromise.create({ provider });
+
+    const chain = currentChain();
+    if (CHAINS.KARURA === chain) {
+      const typesBundle = { ...typesBundleForPolkadot, }
+      api = await ApiPromise.create({ provider, typesBundle });
+    } else {
+      api = await ApiPromise.create({ provider, });
+    }
   }
 
   return {
