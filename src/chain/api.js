@@ -21,7 +21,7 @@ function getEndPoint() {
   } else if ("statemine" === chain) {
     return process.env.STATEMINE_WS_ENDPOINT || defaultEndPoint.statemine;
   } else if (CHAINS.KARURA === chain) {
-    return process.env.STATEMINE_WS_ENDPOINT || defaultEndPoint.karura;
+    return process.env.KARURA_WS_ENDPOINT || defaultEndPoint.karura;
   } else {
     return process.env.DOT_WS_ENDPOINT || defaultEndPoint.polkadot
   }
