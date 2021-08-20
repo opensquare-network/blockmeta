@@ -9,7 +9,6 @@ const { getBlockCollection, getVersionCollection } = require("./mongo/col")
 const { logger } = require("./utils/logger")
 const { deleteFromHeight } = require("./mongo/delete")
 const { getLatestRuntimeVersion } = require("./mongo/service");
-const { blockDataVersion } = require("./utils/constants")
 const { extractDifferentVersions } = require("./utils/runtimeVersions")
 
 const eventsKey = '0x26aa394eea5630e07c48ae0c9558cef780d41e5e16056765bc8461851072c9d7';
@@ -117,7 +116,6 @@ async function scanByHeight(api, provider, scanHeight) {
 
   const meta = {
     height: scanHeight,
-    version: blockDataVersion,
     block: block,
     events: allEvents,
     author: author?.toString(),

@@ -1,19 +1,12 @@
 const { MongoClient } = require("mongodb");
-const { currentChain, CHAINS } = require("../chain/chain");
 
 function getDbName() {
-  const chain = currentChain();
-  if (CHAINS.KUSAMA === chain) {
-    return process.env.MONGO_DB_KSM_NAME || "meta-ksm";
-  } else if (CHAINS.WESTMINT === chain) {
-    return process.env.MONGO_DB_WESTMINT_NAME || "meta-westmint";
-  } else if (CHAINS.STATEMINE === chain) {
-    return process.env.MONGO_DB_STATEMINE_NAME || "meta-statemine";
-  } else if (CHAINS.KARURA === chain) {
-    return process.env.MONGO_DB_KARURA_NAME || "meta-karura";
-  } else {
-    return process.env.MONGO_DB_DOT_NAME || "meta-dot";
+  const dbName = process.env.MONGO_DB_NAME;
+  if (!dbName) {
+    throw new Error("MONGO_DB_NAME not set")
   }
+
+  return dbName
 }
 
 const statusCollectionName = "status";
