@@ -5,20 +5,8 @@
   "repository": "git@github.com:opensquare-network/blockmeta.git",
   "author": "Yongfeng LI <wliyongfeng@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "dotScan": "pm2 start ecosystem.config.js --only meta-scan-dot --env production",
-    "ksmScan": "pm2 start ecosystem.config.js --only meta-scan-ksm --env production",
-    "dotScanStaging": "pm2 start ecosystem.config.js --only meta-scan-dot-staging --env production",
-    "ksmScanStaging": "pm2 start ecosystem.config.js --only meta-scan-ksm-staging --env production",
-    "westmintScan": "pm2 start ecosystem.config.js --only meta-scan-westmint --env production",
-    "statemineScan": "pm2 start ecosystem.config.js --only meta-scan-statemine --env production",
-    "westmintScanStaging": "pm2 start ecosystem.config.js --only meta-scan-westmint-staging --env production",
-    "statemineScanStaging": "pm2 start ecosystem.config.js --only meta-scan-statemine-staging --env production",
-    "karuraScan": "pm2 start ecosystem.config.js --only meta-scan-karura --env production",
-    "karuraScanStaging": "pm2 start ecosystem.config.js --only meta-scan-karura-staging --env production"
-  },
   "dependencies": {
-    "@polkadot/api": "^5.4.1",
+    "@polkadot/api": "^5.5.2",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
     "mongodb": "^3.6.9"
