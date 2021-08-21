@@ -9,6 +9,7 @@
     "start": "node src/index.js"
   },
   "dependencies": {
+    "@acala-network/type-definitions": "^2.0.1",
     "@polkadot/api": "^5.5.2",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
