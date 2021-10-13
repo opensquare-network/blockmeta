@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@acala-network/type-definitions": "2.2.2-6",
-    "@polkadot/api": "5.8.4-4",
+    "@polkadot/api": "6.3.2-10",
     "dotenv": "^10.0.0",
     "log4js": "^6.3.0",
     "mongodb": "^3.6.9"
