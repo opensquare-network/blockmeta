@@ -104,11 +104,12 @@ async function scanByHeight(api, provider, scanHeight) {
     throw e;
   }
 
+  const blockApi = await api.at(blockHash);
   const [block, allEvents, runtimeVersion, validators] = await Promise.all([
     provider.send('chain_getBlock', [blockHash]),
     provider.send('state_getStorageAt', [eventsKey, blockHash]),
     provider.send('chain_getRuntimeVersion', [blockHash]),
-    api.query.session.validators.at(blockHash),
+    blockApi.query.session.validators(),
   ])
 
   const digest = api.registry.createType('Digest', block.block.header.digest, true)

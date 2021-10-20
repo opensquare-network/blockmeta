@@ -1,5 +1,6 @@
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { typesBundleForPolkadot } = require('@acala-network/type-definitions');
+const { versionedKhala, typesChain } = require("@phala/typedefs")
 
 let provider = null;
 let api = null;
@@ -20,6 +21,13 @@ async function getApi() {
     if (['kar', 'karura'].includes(process.env.CHAIN)) {
       const typesBundle = { ...typesBundleForPolkadot, }
       api = await ApiPromise.create({ provider, typesBundle });
+    } else if (['kha', 'khala'].includes(process.env.CHAIN)) {
+      const typesBundle = {
+        spec: {
+          khala: versionedKhala
+        },
+      }
+      api = await ApiPromise.create({ provider, typesBundle, typesChain });
     } else {
       api = await ApiPromise.create({ provider });
     }
