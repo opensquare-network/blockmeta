@@ -43,6 +43,10 @@ async function getApi() {
   };
 }
 
+function isApiConnected() {
+  return provider && provider.isConnected
+}
+
 async function disconnect() {
   if (provider) {
     provider.disconnect();
@@ -52,4 +56,5 @@ async function disconnect() {
 module.exports = {
   getApi,
   disconnect,
+  isApiConnected,
 };

@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const { extractAuthor } = require("@polkadot/api-derive/type/util");
 const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
-const { getApi } = require("./chain/api");
+const { getApi, isApiConnected } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
 const { sleep } = require("./utils");
 const { getBlockCollection, getVersionCollection } = require("./mongo/col")
@@ -83,6 +83,12 @@ async function main() {
     } catch (e) {
       await deleteFromHeight(scanHeight)
       logger.info(`deleted from ${ scanHeight }`);
+
+      if (!isApiConnected()) {
+        logger.info(`provider disconnected, will restart`);
+        process.exit(0)
+      }
+
       await sleep(3000);
       logger.error(`Error with block scan ${ scanHeight }...${ destHeight }`, e);
       continue;
