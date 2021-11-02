@@ -110,22 +110,30 @@ async function scanByHeight(api, provider, scanHeight) {
     throw e;
   }
 
-  const blockApi = await api.at(blockHash);
-  const [block, allEvents, runtimeVersion, validators] = await Promise.all([
+  const promises = [
     provider.send('chain_getBlock', [blockHash]),
     provider.send('state_getStorageAt', [eventsKey, blockHash]),
     provider.send('chain_getRuntimeVersion', [blockHash]),
-    blockApi.query.session.validators(),
-  ])
+  ];
 
-  const digest = api.registry.createType('Digest', block.block.header.digest, true)
-  const author = extractAuthor(digest, validators);
+  const saveValidator = !!process.env.SAVE_VALIDATOR
+  if (saveValidator) {
+    const blockApi = await api.at(blockHash);
+    promises.push(blockApi.query.session.validators())
+  }
 
-  const meta = {
+  const [block, allEvents, runtimeVersion, validators] = await Promise.all(promises)
+
+  let meta = {
     height: scanHeight,
     block: block,
     events: allEvents,
-    author: author?.toString(),
+  }
+
+  if (saveValidator) {
+    const digest = api.registry.createType('Digest', block.block.header.digest, true)
+    const author = extractAuthor(digest, validators || []);
+    meta.author = author?.toString()
   }
 
   return {
