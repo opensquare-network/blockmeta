@@ -126,6 +126,7 @@ async function scanByHeight(api, provider, scanHeight) {
 
   let meta = {
     height: scanHeight,
+    blockHash,
     block: block,
     events: allEvents,
   }
