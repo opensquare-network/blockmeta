@@ -39,7 +39,9 @@ async function getApi() {
     } else {
       api = await ApiPromise.create({ provider });
     }
+    console.log(`Connected to ${getEndPoint()}`)
   }
+
 
   return {
     api,
