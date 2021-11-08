@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { getApi } = require("./chain/api");
+const { getOnlyProvider } = require("./chain/provider");
 const { getBlockCollection } = require("./mongo/col");
 const { sleep } = require("./utils");
 const { getBlocks, getFirstNonBlockHash, } = require("./mongo/service");
@@ -44,7 +44,7 @@ async function main() {
 }
 
 async function getBlockHash(height) {
-  const { provider } = await getApi()
+  const provider = await getOnlyProvider()
   const blockHash = await provider.send('chain_getBlockHash', [height])
 
   return {
