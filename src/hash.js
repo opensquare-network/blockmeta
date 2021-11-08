@@ -22,21 +22,34 @@ async function main() {
       continue
     }
 
+    const promises = []
     const col = await getBlockCollection()
-    const bulk = col.initializeUnorderedBulkOp();
     for (const block of blocks) {
       const height = block.height
+      promises.push(getBlockHash(height))
+    }
 
-      const { provider } = await getApi()
-      const blockHash = await provider.send('chain_getBlockHash', [height])
+    const hashes = await Promise.all(promises);
+    const bulk = col.initializeUnorderedBulkOp();
+    for (const { height, blockHash } of hashes) {
       bulk.find({ height }).update({ $set: { blockHash } })
     }
 
     await bulk.execute()
-    console.log(`${start} - ${end} done!`)
+    console.log(`${ start } - ${ end } done!`)
 
     await sleep(1);
     start = end + 1;
+  }
+}
+
+async function getBlockHash(height) {
+  const { provider } = await getApi()
+  const blockHash = await provider.send('chain_getBlockHash', [height])
+
+  return {
+    height,
+    blockHash
   }
 }
 
