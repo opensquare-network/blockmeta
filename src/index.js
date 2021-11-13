@@ -1,8 +1,7 @@
 require("dotenv").config();
 
-const { extractAuthor } = require("@polkadot/api-derive/type/util");
+const { getOnlyProvider, isProviderConnected } = require("./chain/provider");
 const { getNextScanHeight, updateScanHeight } = require("./mongo/scanHeight");
-const { getApi, isApiConnected } = require("./chain/api");
 const { updateHeight, getLatestHeight } = require("./chain/latestHead");
 const { sleep } = require("./utils");
 const { getBlockCollection, getVersionCollection } = require("./mongo/col")
@@ -44,7 +43,7 @@ async function insertVersions(versions = []) {
 async function main() {
   await updateHeight();
   let scanHeight = await getNextScanHeight();
-  const { api, provider } = await getApi();
+  const provider = await getOnlyProvider();
   await deleteFromHeight(scanHeight);
   logger.info(`deleted from ${ scanHeight }`);
   const step = parseInt(process.env.SCAN_STEP) || 5;
@@ -68,7 +67,7 @@ async function main() {
     const destHeight = targetHeights[targetHeights.length - 1]
 
     try {
-      const promises = targetHeights.map(height => scanByHeight(api, provider, height));
+      const promises = targetHeights.map(height => scanByHeight(provider, height));
       const dataArr = await Promise.all(promises);
       const metaArr = dataArr.map(i => i.meta);
       const runtimeVersions = dataArr.map(i => i.version);
@@ -84,7 +83,7 @@ async function main() {
       await deleteFromHeight(scanHeight)
       logger.info(`deleted from ${ scanHeight }`);
 
-      if (!isApiConnected()) {
+      if (!isProviderConnected()) {
         logger.info(`provider disconnected, will restart`);
         process.exit(0)
       }
@@ -101,7 +100,7 @@ async function main() {
   }
 }
 
-async function scanByHeight(api, provider, scanHeight) {
+async function scanByHeight(provider, scanHeight) {
   let blockHash;
   try {
     blockHash = await provider.send('chain_getBlockHash', [scanHeight])
@@ -116,25 +115,13 @@ async function scanByHeight(api, provider, scanHeight) {
     provider.send('chain_getRuntimeVersion', [blockHash]),
   ];
 
-  const saveValidator = !!process.env.SAVE_VALIDATOR
-  if (saveValidator) {
-    const blockApi = await api.at(blockHash);
-    promises.push(blockApi.query.session.validators())
-  }
-
-  const [block, allEvents, runtimeVersion, validators] = await Promise.all(promises)
+  const [block, allEvents, runtimeVersion] = await Promise.all(promises)
 
   let meta = {
     height: scanHeight,
     blockHash,
     block: block,
     events: allEvents,
-  }
-
-  if (saveValidator) {
-    const digest = api.registry.createType('Digest', block.block.header.digest, true)
-    const author = extractAuthor(digest, validators || []);
-    meta.author = author?.toString()
   }
 
   return {
@@ -146,12 +133,12 @@ async function scanByHeight(api, provider, scanHeight) {
   }
 }
 
-async function test() {
-  const { api, provider } = await getApi()
-
-  const data = await scanByHeight(api, provider, 501);
-  console.log(data)
-}
+// async function test() {
+//   const { api, provider } = await getApi()
+//
+//   const data = await scanByHeight(provider, 501);
+//   console.log(data)
+// }
 
 main().catch(e => logger.error('main error:', e));
 // test()

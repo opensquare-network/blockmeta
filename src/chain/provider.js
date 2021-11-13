@@ -16,6 +16,11 @@ async function getOnlyProvider() {
   return provider
 }
 
+function isProviderConnected() {
+  return provider && provider.isConnected
+}
+
 module.exports = {
   getOnlyProvider,
+  isProviderConnected,
 }
