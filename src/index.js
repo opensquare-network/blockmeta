@@ -119,7 +119,9 @@ async function scanByHeight(api, provider, scanHeight) {
   const saveValidator = !!process.env.SAVE_VALIDATOR
   if (saveValidator) {
     const blockApi = await api.at(blockHash);
-    promises.push(blockApi.query.session.validators())
+    if (blockApi.query.session?.validators) {
+      promises.push(blockApi.query.session.validators())
+    }
   }
 
   const [block, allEvents, runtimeVersion, validators] = await Promise.all(promises)
@@ -131,7 +133,7 @@ async function scanByHeight(api, provider, scanHeight) {
     events: allEvents,
   }
 
-  if (saveValidator) {
+  if (saveValidator && validators) {
     const digest = api.registry.createType('Digest', block.block.header.digest, true)
     const author = extractAuthor(digest, validators || []);
     meta.author = author?.toString()
