@@ -113,7 +113,7 @@ async function scanByHeight(api, provider, scanHeight) {
   const promises = [
     provider.send('chain_getBlock', [blockHash]),
     provider.send('state_getStorageAt', [eventsKey, blockHash]),
-    provider.send('chain_getRuntimeVersion', [blockHash]),
+    provider.send('state_getRuntimeVersion', [blockHash]),
   ];
 
   const saveValidator = !!process.env.SAVE_VALIDATOR
