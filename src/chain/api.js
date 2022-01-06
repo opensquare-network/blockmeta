@@ -3,6 +3,7 @@ const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { typesBundleForPolkadot } = require('@acala-network/type-definitions');
 const { versionedKhala, typesChain } = require("@phala/typedefs")
 const interbtc = require("@interlay/interbtc-types");
+const { typesBundleForPolkadot: bifrostTypesBundleForPolkadot } = require("@bifrost-finance/type-definitions")
 
 let provider = null;
 let api = null;
@@ -36,12 +37,19 @@ async function getApi() {
         },
       }
       api = await ApiPromise.create({ provider, typesBundle, typesChain });
+    } else if (['bifrost', 'bnc'].includes(process.env.CHAIN)) {
+      const typesBundle = {
+        spec: {
+          bifrost: bifrostTypesBundleForPolkadot.spec.bifrost,
+          'bifrost-parachain': bifrostTypesBundleForPolkadot.spec.bifrost,
+        },
+      }
+      api = await ApiPromise.create({ provider, typesBundle });
     } else {
       api = await ApiPromise.create({ provider });
     }
-    console.log(`Connected to ${getEndPoint()}`)
+    console.log(`Connected to ${ getEndPoint() }`)
   }
-
 
   return {
     api,

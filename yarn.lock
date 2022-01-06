@@ -30,10 +30,24 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@bifrost-finance/type-definitions@^1.3.18":
+  version "1.3.18"
+  resolved "https://registry.npmjs.org/@bifrost-finance/type-definitions/-/type-definitions-1.3.18.tgz#99f5d76a06a8a9ad9544e3e7fb3da43629df4822"
+  integrity sha512-cNoBCEGP1nghrPrmqyWC4u/P9lgZOjq32/zv9OJbt/66tXIDEbkd9fhN9gRWMu8EANDddbkBZ3CQt/0hXEIb0Q==
+  dependencies:
+    "@open-web3/orml-type-definitions" "^0.9.4-7"
+
 "@interlay/interbtc-types@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npmjs.org/@interlay/interbtc-types/-/interbtc-types-1.1.1.tgz#99a896e9e88a9f9454c3d8602db8badfd30f5b8c"
   integrity sha512-vh9SisUNivNMKRz1gokvPewtt9XGD6ynggCgEjD8wJuJceX6b4jM1JJx+i+PoSewZAAcVYTJL125yibj98J46g==
+
+"@open-web3/orml-type-definitions@^0.9.4-7":
+  version "0.9.4-38"
+  resolved "https://registry.npmjs.org/@open-web3/orml-type-definitions/-/orml-type-definitions-0.9.4-38.tgz#fc7642f6a518da2618ae39fa76fe046ee57c1e80"
+  integrity sha512-kV0++JlRLEf7Z1y+Jm+792zqx6Q7dzpGP73rJJmQrBaeTML5mQzu4veZ24TVtcLV6hsGjUU/ixrJODNj6CCuZQ==
+  dependencies:
+    lodash.merge "^4.6.2"
 
 "@open-web3/orml-type-definitions@^1.0.2-0":
   version "1.0.2-0"
