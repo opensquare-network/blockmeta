@@ -21,7 +21,7 @@ async function getApi() {
   if (!api) {
     provider = new WsProvider(getEndPoint(), 1000);
 
-    if (['kar', 'karura'].includes(process.env.CHAIN)) {
+    if (['kar', 'karura', 'aca', 'acala'].includes(process.env.CHAIN)) {
       const typesBundle = { ...typesBundleForPolkadot, }
       api = await ApiPromise.create({ provider, typesBundle });
     } else if (['basilisk'].includes(process.env.CHAIN)) {
