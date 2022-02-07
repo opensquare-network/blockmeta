@@ -25,6 +25,7 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017";
 
 async function initDb() {
   client = await MongoClient.connect(mongoUrl, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
