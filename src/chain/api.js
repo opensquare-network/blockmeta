@@ -2,8 +2,8 @@ const { basilisk } = require("./bundle/basilisk");
 const { ApiPromise, WsProvider } = require("@polkadot/api");
 const { typesBundleForPolkadot } = require('@acala-network/type-definitions');
 const { versionedKhala, typesChain } = require("@phala/typedefs")
-const interbtc = require("@interlay/interbtc-types");
 const { typesBundleForPolkadot: bifrostTypesBundleForPolkadot } = require("@bifrost-finance/type-definitions")
+const kint = require("./kintsugi");
 
 let provider = null;
 let api = null;
@@ -28,8 +28,8 @@ async function getApi() {
       const typesBundle = { spec: { basilisk }, }
       api = await ApiPromise.create({ provider, typesBundle });
     } else if (['kintsugi'].includes(process.env.CHAIN)) {
-      const typesBundle = { spec: { 'kintsugi-parachain': interbtc.default, }, }
-      api = await ApiPromise.create({ provider, typesBundle });
+      const typesBundle = { spec: { 'kintsugi-parachain': kint, }, }
+      api = await ApiPromise.create({ provider, typesBundle, rpc: kint.providerRpc, });
     } else if (['kha', 'khala'].includes(process.env.CHAIN)) {
       const typesBundle = {
         spec: {
