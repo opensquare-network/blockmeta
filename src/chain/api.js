@@ -1,9 +1,9 @@
 const { basilisk } = require("./bundle/basilisk");
 const { ApiPromise, WsProvider } = require("@polkadot/api");
-const { typesBundleForPolkadot } = require('@acala-network/type-definitions');
 const { versionedKhala, typesChain } = require("@phala/typedefs")
-const { typesBundleForPolkadot: bifrostTypesBundleForPolkadot } = require("@bifrost-finance/type-definitions")
 const kint = require("./kintsugi");
+const { karuraOptions } = require("./karura/options")
+const { bifrostOptions } = require("./bifrost/options")
 
 let provider = null;
 let api = null;
@@ -22,12 +22,11 @@ async function getApi() {
     provider = new WsProvider(getEndPoint(), 1000);
 
     if (['kar', 'karura', 'aca', 'acala'].includes(process.env.CHAIN)) {
-      const typesBundle = { ...typesBundleForPolkadot, }
-      api = await ApiPromise.create({ provider, typesBundle });
+      api = await ApiPromise.create({ ...karuraOptions, provider, });
     } else if (['basilisk'].includes(process.env.CHAIN)) {
       const typesBundle = { spec: { basilisk }, }
       api = await ApiPromise.create({ provider, typesBundle });
-    } else if (['kintsugi'].includes(process.env.CHAIN)) {
+    } else if (['kintsugi', 'interlay'].includes(process.env.CHAIN)) {
       const typesBundle = { spec: { 'kintsugi-parachain': kint, }, }
       api = await ApiPromise.create({ provider, typesBundle, rpc: kint.providerRpc, });
     } else if (['kha', 'khala'].includes(process.env.CHAIN)) {
@@ -38,17 +37,20 @@ async function getApi() {
       }
       api = await ApiPromise.create({ provider, typesBundle, typesChain });
     } else if (['bifrost', 'bnc'].includes(process.env.CHAIN)) {
-      const typesBundle = {
-        spec: {
-          bifrost: bifrostTypesBundleForPolkadot.spec.bifrost,
-          'bifrost-parachain': bifrostTypesBundleForPolkadot.spec.bifrost,
-        },
-      }
-      api = await ApiPromise.create({ provider, typesBundle });
+      api = await ApiPromise.create({ ...bifrostOptions, provider, });
     } else {
       api = await ApiPromise.create({ provider });
     }
     console.log(`Connected to ${ getEndPoint() }`)
+
+    api.on("error", (err) => {
+      console.error("api error, will restart:", err);
+      process.exit(0);
+    });
+    api.on("disconnected", () => {
+      console.error("api disconnected, will restart:");
+      process.exit(0);
+    });
   }
 
   return {
