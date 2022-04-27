@@ -9,11 +9,7 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "@acala-network/api-derive": "4.0.2-15",
-    "@acala-network/types": "4.0.2-15",
-    "@open-web3/orml-api-derive": "1.0.2-3",
-    "@bifrost-finance/types": "1.4.0",
-    "@interlay/interbtc-types": "1.5.10",
+    "@osn/provider-options": "^1.0.3",
     "@phala/typedefs": "0.2.30",
     "@polkadot/api": "7.13.1",
     "dotenv": "^10.0.0",
