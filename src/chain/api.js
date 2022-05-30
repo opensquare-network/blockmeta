@@ -8,6 +8,7 @@ const {
   polkadexOptions,
   bifrostOptions,
   soraOptions,
+  crabOptions,
 } = require("@osn/provider-options")
 
 let provider = null;
@@ -49,6 +50,8 @@ async function getApi() {
     customizedOptions = bifrostOptions;
   } else if (['sora'].includes(process.env.CHAIN)) {
     customizedOptions = soraOptions;
+  } else if (['crab'].includes(process.env.CHAIN)) {
+    customizedOptions = crabOptions;
   }
 
   let options = { provider };
