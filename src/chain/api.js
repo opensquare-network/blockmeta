@@ -44,7 +44,7 @@ async function getApi() {
     customizedOptions = crustOptions;
   } else if (['polkadex'].includes(process.env.CHAIN)) {
     customizedOptions = polkadexOptions;
-  } else if (['kha', 'khala'].includes(process.env.CHAIN)) {
+  } else if (['kha', 'khala', 'pha', 'phala'].includes(process.env.CHAIN)) {
     customizedOptions = khalaOptions;
   } else if (['bifrost', 'bnc'].includes(process.env.CHAIN)) {
     customizedOptions = bifrostOptions;
