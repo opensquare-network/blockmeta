@@ -41,9 +41,18 @@ async function insertVersions(versions = []) {
   await bulk.execute()
 }
 
+async function getToScanHeight() {
+  let scanHeight = await getNextScanHeight();
+  if (process.env.SCAN_FROM_LATEST === '1') {
+    scanHeight = getLatestHeight();
+  }
+
+  return scanHeight;
+}
+
 async function main() {
   await updateHeight();
-  let scanHeight = await getNextScanHeight();
+  let scanHeight = await getToScanHeight();
   const { api, provider } = await getApi();
   await deleteFromHeight(scanHeight);
   logger.info(`deleted from ${ scanHeight }`);
