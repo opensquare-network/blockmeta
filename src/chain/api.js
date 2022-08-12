@@ -9,6 +9,7 @@ const {
   bifrostOptions,
   soraOptions,
   crabOptions,
+  zeitgeistOptions,
 } = require("@osn/provider-options")
 
 let provider = null;
@@ -52,6 +53,8 @@ async function getApi() {
     customizedOptions = soraOptions;
   } else if (['crab'].includes(process.env.CHAIN)) {
     customizedOptions = crabOptions;
+  } else if (['crab'].includes(process.env.CHAIN)) {
+    customizedOptions = zeitgeistOptions;
   }
 
   let options = { provider };
