@@ -53,7 +53,7 @@ async function getApi() {
     customizedOptions = soraOptions;
   } else if (['crab'].includes(process.env.CHAIN)) {
     customizedOptions = crabOptions;
-  } else if (['crab'].includes(process.env.CHAIN)) {
+  } else if (['zeitgeist'].includes(process.env.CHAIN)) {
     customizedOptions = zeitgeistOptions;
   }
 
