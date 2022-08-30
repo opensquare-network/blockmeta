@@ -56,10 +56,10 @@
     "@opencensus/core" "^0.0.8"
     uuid "^3.2.1"
 
-"@osn/provider-options@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@osn/provider-options/-/provider-options-1.0.8.tgz#426c7d19f7da35ab210e85b80dba2d3d2eed161d"
-  integrity sha512-ZK3f9++5GwLh1BPH2uiq3rwDIPL4zI4FYzoM0WtiVxnYrV01+nTvLCRzV/ismWeByqVxVayDheOk93BCb05ZCA==
+"@osn/provider-options@1.0.13":
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/@osn/provider-options/-/provider-options-1.0.13.tgz#e8e1203816deb64c744637daaad0390feaaba88a"
+  integrity sha512-JN6Hxr9KGFQjnBPAeUQXAfXIsnzYlqB9xOlZLh8XFuMCSCs37rKm7uHR48FxOXbC/Pi5fyHTarzt4FdtMYugDg==
 
 "@pm2/agent@~2.0.0":
   version "2.0.0"
