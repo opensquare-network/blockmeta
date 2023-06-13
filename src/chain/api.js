@@ -11,7 +11,8 @@ const {
   crabOptions,
   zeitgeistOptions,
   litentryOptions,
-} = require("@osn/provider-options")
+} = require("@osn/provider-options");
+const chainOptions = require("@osn/provider-options");
 
 let provider = null;
 let api = null;
@@ -35,7 +36,8 @@ async function getApi() {
 
   provider = new WsProvider(getEndPoint(), 1000);
 
-  let customizedOptions = {};
+  const chain = process.env.CHAIN;
+  let customizedOptions ;
   if (['kar', 'karura', 'aca', 'acala'].includes(process.env.CHAIN)) {
     customizedOptions = karuraOptions;
   } else if (['basilisk'].includes(process.env.CHAIN)) {
@@ -58,6 +60,8 @@ async function getApi() {
     customizedOptions = zeitgeistOptions;
   } else if (['litentry', 'lit'].includes(process.env.CHAIN)) {
     customizedOptions = litentryOptions;
+  } else {
+    customizedOptions = chainOptions[chain];
   }
 
   let options = { provider };
