@@ -29,7 +29,7 @@ function is_in_remote() {
 }
 
 branch_name="${1}";
-pid=prod-subsquare-acala-scan;
+pid=prod-meta-polkadot;
 
 if [ -z "$1" ]; then
   git pull && yarn && pm2 restart $pid;
