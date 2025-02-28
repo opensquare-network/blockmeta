@@ -3,12 +3,20 @@ const { getStatusCollection } = require("./col");
 const genesisHeight = 1;
 const mainScanName = "main-scan-height";
 
+function getGenesisHeight() {
+  if ("cere-testnet" === process.env.CHAIN) {
+    return 891032;
+  }
+
+  return genesisHeight;
+}
+
 async function getNextScanHeight() {
   const statusCol = await getStatusCollection();
   const heightInfo = await statusCol.findOne({ name: mainScanName });
 
   if (!heightInfo) {
-    return genesisHeight;
+    return getGenesisHeight();
   } else if (typeof heightInfo.value === "number") {
     return heightInfo.value + 1;
   } else {
