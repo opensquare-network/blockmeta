@@ -3,10 +3,10 @@ const { MongoClient } = require("mongodb");
 function getDbName() {
   const dbName = process.env.MONGO_DB_NAME;
   if (!dbName) {
-    throw new Error("MONGO_DB_NAME not set")
+    throw new Error("MONGO_DB_NAME not set");
   }
 
-  return dbName
+  return dbName;
 }
 
 const statusCollectionName = "status";
@@ -43,7 +43,7 @@ async function _createIndexes() {
     process.exit(1);
   }
 
-  await blockCol.createIndex({ height: -1 }, { unique: true })
+  await blockCol.createIndex({ height: -1 }, { unique: true });
 
   // TODO: create indexes for better query performance
 }
@@ -69,8 +69,22 @@ async function getVersionCollection() {
   return versionCol;
 }
 
+async function disconnect() {
+  if (!client) {
+    return;
+  }
+
+  await client.close();
+  client = null;
+  db = null;
+  statusCol = null;
+  blockCol = null;
+  versionCol = null;
+}
+
 module.exports = {
   getStatusCollection,
   getBlockCollection,
   getVersionCollection,
-}
+  disconnect,
+};
