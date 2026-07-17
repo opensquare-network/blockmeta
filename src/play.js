@@ -182,7 +182,7 @@ async function saveBlockData(meta, version) {
 async function play() {
   const { api, provider } = await getApi();
   try {
-    const targetHeight = 15856938;
+    const targetHeight = 18310888;
     logger.info(`Fetching block #${targetHeight}...`);
 
     const { meta, version } = await scanByHeight(api, provider, targetHeight);

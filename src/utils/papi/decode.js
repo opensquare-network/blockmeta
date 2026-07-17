@@ -22,27 +22,37 @@ function getRuntimeTypeIds(metadata) {
     ({ name }) => name === "Events",
   );
   const extrinsicDefinition = metadata.lookup[metadata.extrinsic.type];
-  const callType = extrinsicDefinition.params.find(
-    ({ name }) => name === "Call",
-  ).type;
+  const getExtrinsicParameterType = (name) => {
+    return extrinsicDefinition.params.find((param) => param.name === name).type;
+  };
 
   return {
     eventRecordType: eventsStorage.type.value,
-    callType,
-    extrinsicType: metadata.extrinsic.type,
+    callType: getExtrinsicParameterType("Call"),
+    addressType: getExtrinsicParameterType("Address"),
+    signatureType: getExtrinsicParameterType("Signature"),
   };
 }
 
 function buildDecoders(metadataHex) {
   const metadata = unifyMetadata(decAnyMetadata(metadataHex));
   const dynamicBuilder = getDynamicBuilder(getLookupFn(metadata));
-  const { eventRecordType, callType, extrinsicType } =
+  const { eventRecordType, callType, addressType, signatureType } =
     getRuntimeTypeIds(metadata);
 
   return {
     eventsCodec: dynamicBuilder.buildDefinition(eventRecordType),
     callCodec: dynamicBuilder.buildDefinition(callType),
-    extrinsicCodec: dynamicBuilder.buildDefinition(extrinsicType),
+    addressCodec: dynamicBuilder.buildDefinition(addressType),
+    signatureCodec: dynamicBuilder.buildDefinition(signatureType),
+    signedExtensionCodecs: Object.fromEntries(
+      Object.entries(metadata.extrinsic.signedExtensions).map(
+        ([version, extensions]) => [
+          version,
+          extensions.map(({ type }) => dynamicBuilder.buildDefinition(type)),
+        ],
+      ),
+    ),
   };
 }
 
@@ -55,9 +65,27 @@ function getCallParts(call) {
   };
 }
 
-function getSignedExtrinsicCall(extrinsic) {
-  if (extrinsic.call) return extrinsic.call;
-  return extrinsic.value?.call || {};
+function consumeCodec(bytes, codec) {
+  const value = codec.dec(bytes);
+  return bytes.slice(codec.enc(value).length);
+}
+
+function decodeSignedExtrinsicCall(body, version, decoders) {
+  const signedExtensionCodecs =
+    decoders.signedExtensionCodecs[version] ||
+    decoders.signedExtensionCodecs[0] ||
+    [];
+  let remaining = body.slice(1);
+
+  for (const codec of [
+    decoders.addressCodec,
+    decoders.signatureCodec,
+    ...signedExtensionCodecs,
+  ]) {
+    remaining = consumeCodec(remaining, codec);
+  }
+
+  return decoders.callCodec.dec(remaining);
 }
 
 function decodeExtrinsic(rawExtrinsic, decoders) {
@@ -66,7 +94,7 @@ function decodeExtrinsic(rawExtrinsic, decoders) {
 
   const format = extrinsicFormat.dec(body);
   if (format.type === "signed") {
-    return getSignedExtrinsicCall(decoders.extrinsicCodec.dec(body));
+    return decodeSignedExtrinsicCall(body, format.version, decoders);
   }
 
   return decoders.callCodec.dec(body.slice(1));
