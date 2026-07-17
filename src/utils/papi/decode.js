@@ -70,11 +70,8 @@ function consumeCodec(bytes, codec) {
   return bytes.slice(codec.enc(value).length);
 }
 
-function decodeSignedExtrinsicCall(body, version, decoders) {
-  const signedExtensionCodecs =
-    decoders.signedExtensionCodecs[version] ||
-    decoders.signedExtensionCodecs[0] ||
-    [];
+function decodeSignedExtrinsicCall(body, decoders) {
+  const signedExtensionCodecs = decoders.signedExtensionCodecs[0] || [];
   let remaining = body.slice(1);
 
   for (const codec of [
@@ -94,7 +91,7 @@ function decodeExtrinsic(rawExtrinsic, decoders) {
 
   const format = extrinsicFormat.dec(body);
   if (format.type === "signed") {
-    return decodeSignedExtrinsicCall(body, format.version, decoders);
+    return decodeSignedExtrinsicCall(body, decoders);
   }
 
   return decoders.callCodec.dec(body.slice(1));
